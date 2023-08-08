@@ -11,7 +11,7 @@ Currently, two official plugins are available:
 …or create a new repository on the command line
 
 echo "# shopping-cart-add" >> README.md
-git init
+git init 
 git add README.md
 git commit -m "first commit"
 git branch -M main
