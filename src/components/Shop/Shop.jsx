@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Shop.css'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
@@ -45,15 +45,15 @@ const Shop = () => {
         addToDb(product.id)
     }
 
-    const removeFromCart = rmProduct => {
+    const removeFromCart = product => {
         let newCart = []
-        const exists = cart.find(pd => pd.id === rmProduct)
+        const exists = cart.find(pd => pd.id === product.id)
         if(exists){
-            const remaining = cart.filter(pd => pd.id !== rmProduct)
+            const remaining = cart.filter(pd => pd.id !== product.id)
             newCart = [...remaining]
-            removeFromDb(rmProduct)
-        } 
-        setCart(newCart) 
+            setCart(newCart)
+            removeFromDb(product.id)
+        }
     }
 
     return (
@@ -62,7 +62,7 @@ const Shop = () => {
                 {products.map(product => <Product
                     product={product}
                     key={product.id}
-                    eHandle={HandleAddToCart}
+                    addToCart={HandleAddToCart}
                     removeFromCart={removeFromCart}
                 ></Product>)}
             </div>
