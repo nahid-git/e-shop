@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import './Shop.css'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
@@ -7,6 +7,7 @@ import { addToDb, getShoppingCart, removeFromDb } from '../../utilities/fakedb';
 const Shop = () => {
     const [products, setProducts] = useState([])
     const [cart, setCart] = useState([])
+
 
     useEffect(() => {
         fetch('products.json')
@@ -21,8 +22,7 @@ const Shop = () => {
             const addedProduct = products.find(product => product.id === id)
 
             if (addedProduct) {
-                const quantity = storedCart[id]
-                addedProduct.quantity = quantity
+                addedProduct.quantity = storedCart[id]
                 saveCard.push(addedProduct)
             }
         }
@@ -30,15 +30,15 @@ const Shop = () => {
     }, [products])
 
     const HandleAddToCart = (product) => {
-        let newCart = []
+        let newCart
         const exists = cart.find(pd => pd.id === product.id)
-        if(!exists){
-            product.quantity = 1
-            newCart = [...cart, product]
-        }else{
+        if (exists) {
             exists.quantity = exists.quantity + 1
             const remaining = cart.filter(pd => pd.id !== product.id)
             newCart = [...remaining, exists]
+        } else {
+            product.quantity = 1
+            newCart = [...cart, product]
         }
 
         setCart(newCart)
